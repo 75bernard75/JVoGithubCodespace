@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% if description %}{{ description }}{% else %}Guides d'achat et conseils experts pour consoles et jeux vidéo d'occasion{% endif %}">
+    <title>{% if title %}{{ title }}{% else %}Jeux Vidéo Occasion - Guides Experts Rétro{% endif %}</title>
+    <meta name="robots" content="{% if indexable !== false %}index, follow{% else %}noindex, nofollow{% endif %}">
+    {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+    {% if lang %}<meta name="language" content="{{ lang }}">{% endif %}
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="preload" as="image" href="/assets/images/logo.svg">
+    {% if schema_json %}<script type="application/ld+json">{{ schema_json | safe }}</script>{% endif %}
+</head>
+<body>
+    <header role="banner" class="site-header">
+        <div class="container">
+            <h1><a href="/">Jeux Vidéo Occasion</a></h1>
+            <nav role="navigation" aria-label="Principale">
+                <ul>
+                    <li><a href="/consoles/">Consoles</a></li>
+                    <li><a href="/jeux/">Jeux</a></li>
+                    <li><a href="/accessories/">Accessoires</a></li>
+                    <li><a href="/guides-achat/">Guides d'achat</a></li>
+                    <li><a href="/expertise/">Expertise</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <div class="container">
+            {{ content | safe }}
+        </div>
+    </main>
+
+    <footer role="contentinfo" class="site-footer">
+        <div class="container">
+            <nav aria-label="Footer">
+                <ul>
+                    <li><a href="/transparence-affiliation/">Transparence Affiliation</a></li>
+                    <li><a href="/mentions-legales/">Mentions Légales</a></li>
+                    <li><a href="/confidentialite/">Politique de Confidentialité</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+            <p>&copy; 2025 Jeux Vidéo Occasion. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

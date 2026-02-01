@@ -1,0 +1,326 @@
+{
+  "namespace": "jvo_cms",
+  "collections": {
+    "consoles": {
+      "collection": "consoles",
+      "meta": {
+        "icon": "smart_toy",
+        "color": "#FF6B6B",
+        "note": "Consoles (plateformes) rétro - TIER S, A, B"
+      },
+      "schema": {
+        "name": "consoles"
+      },
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": { "hidden": true }
+        },
+        {
+          "field": "slug",
+          "type": "string",
+          "schema": { "is_primary_key": true },
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "name",
+          "type": "string",
+          "meta": { "width": "half", "required": true }
+        },
+        {
+          "field": "tier",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "TIER S", "value": "S" }, { "text": "TIER A", "value": "A" }, { "text": "TIER B", "value": "B" }] } }
+        },
+        {
+          "field": "release_year",
+          "type": "integer",
+          "meta": { "width": "half" }
+        },
+        {
+          "field": "manufacturer",
+          "type": "string",
+          "meta": { "width": "half" }
+        },
+        {
+          "field": "description_short",
+          "type": "text",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "seo_title",
+          "type": "string",
+          "meta": { "width": "full", "note": "50-60 chars" }
+        },
+        {
+          "field": "seo_meta",
+          "type": "string",
+          "meta": { "width": "full", "note": "150-160 chars" }
+        },
+        {
+          "field": "seo_canonical",
+          "type": "string",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "persona_primary",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Nostalgique CSP+", "value": "nostalgique" }, { "text": "Parent pragmatique", "value": "parent" }, { "text": "Collectionneur", "value": "collectionneur" }, { "text": "Gamer Budget", "value": "budget" }, { "text": "Tech curieux", "value": "tech" }] }, "required": true }
+        },
+        {
+          "field": "persona_secondary",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select" }
+        },
+        {
+          "field": "technical_level",
+          "type": "integer",
+          "meta": { "width": "half", "note": "1-5" }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Draft", "value": "draft" }, { "text": "Published", "value": "published" }] } }
+        }
+      ]
+    },
+    "guides": {
+      "collection": "guides",
+      "meta": {
+        "icon": "article",
+        "color": "#4ECDC4",
+        "note": "Guides d'achat, expertise, sélections (V1→V2→V3)"
+      },
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": { "hidden": true }
+        },
+        {
+          "field": "slug",
+          "type": "string",
+          "schema": { "is_primary_key": true },
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "title",
+          "type": "string",
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "guide_type",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Money", "value": "money" }, { "text": "Expertise", "value": "expertise" }, { "text": "Sélection", "value": "selection" }] } }
+        },
+        {
+          "field": "console_id",
+          "type": "uuid",
+          "meta": { "width": "half", "interface": "many_to_one", "related_collection": "consoles" }
+        },
+        {
+          "field": "description",
+          "type": "text",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "content_v1",
+          "type": "text",
+          "meta": { "width": "full", "interface": "input-rich-text-md", "note": "Brut informatif" }
+        },
+        {
+          "field": "content_v2",
+          "type": "text",
+          "meta": { "width": "full", "interface": "input-rich-text-md", "note": "Éditeur humain" }
+        },
+        {
+          "field": "content_v3",
+          "type": "text",
+          "meta": { "width": "full", "interface": "input-rich-text-md", "note": "Final lissé (obligatoire pub)" }
+        },
+        {
+          "field": "seo_title",
+          "type": "string",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "seo_meta",
+          "type": "string",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "persona_primary",
+          "type": "string",
+          "meta": { "width": "half", "required": true }
+        },
+        {
+          "field": "technical_level",
+          "type": "integer",
+          "meta": { "width": "half" }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": { "width": "full", "interface": "select", "options": { "choices": [{ "text": "Draft", "value": "draft" }, { "text": "V1 Pending", "value": "v1_pending" }, { "text": "V2 Pending", "value": "v2_pending" }, { "text": "V3 Pending (Ready)", "value": "v3_pending" }, { "text": "Published", "value": "published" }] } }
+        }
+      ]
+    },
+    "accessories": {
+      "collection": "accessories",
+      "meta": {
+        "icon": "extension",
+        "color": "#95E1D3",
+        "note": "Accessoires (transport, goodies, manettes, etc.) - Scalable"
+      },
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "meta": { "hidden": true }
+        },
+        {
+          "field": "slug",
+          "type": "string",
+          "schema": { "is_primary_key": true },
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "name",
+          "type": "string",
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "category",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Manettes", "value": "manettes" }, { "text": "Câbles", "value": "cables" }, { "text": "Transport", "value": "transport" }, { "text": "Goodies", "value": "goodies" }, { "text": "Accessoires spéciaux", "value": "speciaux" }, { "text": "Divers", "value": "divers" }] }, "required": true }
+        },
+        {
+          "field": "description",
+          "type": "text",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "status",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Draft", "value": "draft" }, { "text": "Published", "value": "published" }] } }
+        }
+      ]
+    },
+    "videos": {
+      "collection": "videos",
+      "meta": {
+        "icon": "theaters",
+        "color": "#FFD93D",
+        "note": "Vidéos (YouTube, Vimeo) - Minimum 1 par page money/pilier"
+      },
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "schema": { "is_primary_key": true }
+        },
+        {
+          "field": "title",
+          "type": "string",
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "platform",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "YouTube", "value": "youtube" }, { "text": "Vimeo", "value": "vimeo" }, { "text": "Dailymotion", "value": "dailymotion" }] } }
+        },
+        {
+          "field": "url",
+          "type": "string",
+          "meta": { "width": "full" }
+        },
+        {
+          "field": "contextual_intro",
+          "type": "text",
+          "meta": { "width": "full", "note": "Intro 1-2 phrases" }
+        }
+      ]
+    },
+    "images": {
+      "collection": "images",
+      "meta": {
+        "icon": "image",
+        "color": "#6BCB77",
+        "note": "Images (WebP/AVIF, lazy loading obligatoire)"
+      },
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "schema": { "is_primary_key": true }
+        },
+        {
+          "field": "filename",
+          "type": "string",
+          "meta": { "width": "full", "required": true }
+        },
+        {
+          "field": "alt",
+          "type": "string",
+          "meta": { "width": "full", "required": true, "note": "Alt naturel, no keyword stuffing" }
+        },
+        {
+          "field": "source_type",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Licensed", "value": "licensed" }, { "text": "Official", "value": "official" }, { "text": "Internal", "value": "internal" }, { "text": "AI Generated", "value": "ai_generated" }] } }
+        },
+        {
+          "field": "lazy",
+          "type": "boolean",
+          "meta": { "width": "half" }
+        }
+      ]
+    },
+    "affiliate_config": {
+      "collection": "affiliate_config",
+      "meta": {
+        "icon": "attach_money",
+        "color": "#FF6B9D",
+        "note": "Configuration affiliation (Amazon + eBay)"
+      },
+      "fields": [
+        {
+          "field": "id",
+          "type": "uuid",
+          "schema": { "is_primary_key": true }
+        },
+        {
+          "field": "type",
+          "type": "string",
+          "meta": { "width": "half", "interface": "select", "options": { "choices": [{ "text": "Amazon", "value": "amazon" }, { "text": "eBay", "value": "ebay" }] }, "required": true }
+        },
+        {
+          "field": "enabled",
+          "type": "boolean",
+          "meta": { "width": "half" }
+        },
+        {
+          "field": "amazon_tag",
+          "type": "string",
+          "meta": { "width": "full", "note": "jeuxvideooneagain-21" }
+        },
+        {
+          "field": "ebay_campid",
+          "type": "string",
+          "meta": { "width": "half", "note": "Campaign ID configurables" }
+        },
+        {
+          "field": "ebay_customid",
+          "type": "string",
+          "meta": { "width": "half", "note": "Custom ID configurables" }
+        },
+        {
+          "field": "import_source",
+          "type": "string",
+          "meta": { "width": "full", "interface": "select", "options": { "choices": [{ "text": "API Officielle", "value": "api" }, { "text": "Import Direct CSV/RSS", "value": "direct" }] } }
+        }
+      ]
+    }
+  }
+}

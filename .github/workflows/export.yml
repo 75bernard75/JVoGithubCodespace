@@ -1,0 +1,68 @@
+name: Nightly Directus Export
+
+on:
+  schedule:
+    # Daily at 2 AM UTC (10 PM EST / 9 PM CST / 8 PM MST / 7 PM PST previous day)
+    - cron: '0 2 * * *'
+  
+  # Manual trigger for testing
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    name: Export Directus Data
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🚀 Export data from Directus
+        run: npm run directus:export
+        env:
+          DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
+          DIRECTUS_EMAIL: ${{ secrets.DIRECTUS_EMAIL }}
+          DIRECTUS_PASSWORD: ${{ secrets.DIRECTUS_PASSWORD }}
+
+      - name: 📊 Check for changes
+        id: verify
+        run: |
+          if git diff --quiet data/directus-export.json; then
+            echo "no_changes=true" >> $GITHUB_OUTPUT
+            echo "✓ No changes in export"
+          else
+            echo "no_changes=false" >> $GITHUB_OUTPUT
+            echo "✓ Export has changes"
+          fi
+
+      - name: 🔧 Setup git
+        if: steps.verify.outputs.no_changes == 'false'
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: 💾 Commit changes
+        if: steps.verify.outputs.no_changes == 'false'
+        run: |
+          git add data/directus-export.json
+          git commit -m "chore: update directus export $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+
+      - name: 📢 Notify success
+        if: success()
+        run: echo "✅ Export completed successfully"
+
+      - name: ⚠️ Notify failure
+        if: failure()
+        run: echo "❌ Export failed - check logs"

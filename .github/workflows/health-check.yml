@@ -1,0 +1,88 @@
+name: Production Health Check
+
+on:
+  schedule:
+    # Every 15 minutes
+    - cron: '*/15 * * * *'
+  
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    name: Site Health Check
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Check site status
+        id: health
+        run: |
+          echo "Checking site health..."
+          
+          if [ -z "${{ secrets.DEPLOY_HOST }}" ]; then
+            echo "⚠️ DEPLOY_HOST not configured - skipping health check"
+            exit 0
+          fi
+          
+          SITE_URL="https://${{ secrets.DEPLOY_HOST }}"
+          echo "Checking: $SITE_URL"
+          
+          # Try HTTPS first, then HTTP
+          if curl -f -s -o /dev/null -w "%{http_code}" "$SITE_URL" -m 10; then
+            echo "status=up" >> $GITHUB_OUTPUT
+            exit 0
+          elif curl -f -s -o /dev/null -w "%{http_code}" "http://${{ secrets.DEPLOY_HOST }}" -m 10; then
+            echo "status=up" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "status=down" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: ✅ Site is healthy
+        if: steps.health.outputs.status == 'up'
+        run: |
+          echo "✅ Production site is UP and responding"
+          echo "- Time: $(date)"
+          echo "- Site: https://${{ secrets.DEPLOY_HOST }}"
+
+      - name: ⚠️ Site is down
+        if: steps.health.outputs.status == 'down'
+        run: |
+          echo "❌ Production site is DOWN"
+          echo "- Time: $(date)"
+          echo "- Site: https://${{ secrets.DEPLOY_HOST }}"
+          exit 1
+
+      - name: 📊 Performance check
+        if: steps.health.outputs.status == 'up'
+        run: |
+          SITE_URL="https://${{ secrets.DEPLOY_HOST }}"
+          echo "Performance metrics:"
+          curl -w "- Connect time: %{time_connect}s\n" -s -o /dev/null "$SITE_URL" || \
+          curl -w "- Connect time: %{time_connect}s\n" -s -o /dev/null "http://${{ secrets.DEPLOY_HOST }}"
+
+      - name: 🔄 Retry health check
+        if: failure()
+        run: |
+          echo "Retrying health check..."
+          sleep 30
+          
+          if curl -f -s "https://${{ secrets.DEPLOY_HOST }}" > /dev/null || \
+             curl -f -s "http://${{ secrets.DEPLOY_HOST }}" > /dev/null; then
+            echo "✅ Site recovered"
+            exit 0
+          else
+            echo "❌ Site still down after retry"
+            exit 1
+          fi
+
+      - name: 📢 Health check summary
+        if: always()
+        run: |
+          echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: ${{ steps.health.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Time: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- Site: ${{ secrets.DEPLOY_HOST }}" >> $GITHUB_STEP_SUMMARY

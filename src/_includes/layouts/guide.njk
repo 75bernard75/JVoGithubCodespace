@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+---
+<article class="guide-page">
+    <h1>{{ title }}</h1>
+
+    {% if description %}
+    <p class="lead">{{ description }}</p>
+    {% endif %}
+
+    {% if persona_primary %}
+    <div class="meta-info">
+        <span class="meta">Type : {{ guide_type or 'Guide' }}</span>
+        <span class="meta">Pour : {{ persona_primary }}</span>
+        {% if technical_level %}<span class="meta">Difficulté : {{ technical_level }}/5</span>{% endif %}
+    </div>
+    {% endif %}
+
+    <div class="toc" aria-label="Sommaire">
+        <h2>Sommaire</h2>
+        <!-- Généré automatiquement à partir des H2/H3 -->
+    </div>
+
+    <div class="content">
+        {{ content | safe }}
+    </div>
+
+    {% if affiliate_blocks and affiliate_blocks.length > 0 %}
+    <aside class="cta-section" role="region" aria-label="Appels à l'action">
+        {% for block in affiliate_blocks %}
+        <div class="cta-block">
+            <p>{{ block.cta_text }}</p>
+            <a href="{{ block.link }}" rel="sponsored" data-track-click="true">Découvrir</a>
+        </div>
+        {% endfor %}
+    </aside>
+    {% endif %}
+
+    {% if maillage_interne and maillage_interne.length > 0 %}
+    <nav class="related-content" aria-label="Contenu connexe">
+        <h3>En relation</h3>
+        <ul>
+        {% for item in maillage_interne | head(5) %}
+            <li><a href="/{{ item.slug }}/">{{ item.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+</article>

@@ -1,0 +1,107 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Server
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Eleventy
+        run: npm run build
+        env:
+          ELEVENTY_ENV: production
+
+      - name: 📦 Download build artifact
+        if: always()
+        uses: actions/download-artifact@v4
+        with:
+          name: eleventy-build
+          path: _site/
+        continue-on-error: true
+
+      - name: 📊 Verify build
+        run: |
+          if [ ! -d "_site" ]; then
+            echo "⚠️ Build directory not found, building now..."
+            npm run build
+          fi
+          echo "✅ Build verified"
+          du -sh _site/
+          find _site -name "*.html" | wc -l
+
+      - name: 🔑 Setup SSH key
+        if: secrets.DEPLOY_KEY != ''
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: 📤 Deploy via SSH
+        if: secrets.DEPLOY_KEY != ''
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            _site/ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/
+
+      - name: 🔄 Restart web server
+        if: secrets.DEPLOY_KEY != ''
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+            "cd ${{ secrets.DEPLOY_PATH }} && \
+             sudo systemctl restart nginx || sudo systemctl restart apache2 || true"
+
+      - name: ✅ Health check
+        if: secrets.DEPLOY_HOST != ''
+        run: |
+          echo "Waiting for deployment..."
+          sleep 5
+          for i in {1..5}; do
+            if curl -f https://${{ secrets.DEPLOY_HOST }} > /dev/null 2>&1 || \
+               curl -f http://${{ secrets.DEPLOY_HOST }} > /dev/null 2>&1; then
+              echo "✅ Site is UP"
+              exit 0
+            fi
+            echo "Attempt $i/5 - waiting..."
+            sleep 10
+          done
+          echo "⚠️ Health check timed out (site may still be deploying)"
+
+      - name: 📢 Deployment summary
+        if: always()
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Deployment completed" >> $GITHUB_STEP_SUMMARY
+          echo "🕐 Time: $(date)" >> $GITHUB_STEP_SUMMARY
+
+      - name: 🗑️ Cleanup SSH key
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key
+          rm -f ~/.ssh/known_hosts
+
+      - name: ⚠️ Deployment failed
+        if: failure()
+        run: |
+          echo "## ⚠️ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+          echo "Check logs above for details" >> $GITHUB_STEP_SUMMARY

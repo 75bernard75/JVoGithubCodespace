@@ -1,0 +1,73 @@
+name: Build Eleventy Site
+
+on:
+  push:
+    paths:
+      - 'data/directus-export.json'
+      - 'src/**'
+      - 'package.json'
+      - '.eleventy.js'
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Test
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Eleventy
+        run: npm run build
+        env:
+          ELEVENTY_ENV: production
+
+      - name: ✅ Run tests
+        run: npm run test
+
+      - name: 📦 Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: eleventy-build
+          path: _site/
+          retention-days: 7
+
+      - name: 📊 Build statistics
+        run: |
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Build completed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Site size: $(du -sh _site/ | cut -f1)" >> $GITHUB_STEP_SUMMARY
+          echo "📄 Page count: $(find _site -name '*.html' | wc -l)" >> $GITHUB_STEP_SUMMARY
+
+      - name: 🚀 Ready for deployment
+        if: success()
+        run: echo "Build artifact ready for deployment"
+          echo " HTML files created"
+      
+      - name: Deploy to Staging
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploying to FTP (o2switch/MassiveHoster)"
+          echo "Command: lftp -u \$FTP_USER:\$FTP_PASS ${{ secrets.FTP_HOST }} -e 'mirror -R _site / --delete; quit'"
+        continue-on-error: true
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: _site/

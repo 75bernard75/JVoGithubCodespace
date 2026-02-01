@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: jvo-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-directus}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-directus_password_change_me}
+      POSTGRES_DB: ${DB_NAME:-directus}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=fr_FR.UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persist database data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-directus}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jvo-network
+    restart: unless-stopped
+
+  # Directus Headless CMS
+  directus:
+    image: directus/directus:latest
+    container_name: jvo-directus
+    ports:
+      - "8055:8055"
+    environment:
+      # Database
+      DB_CLIENT: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_NAME:-directus}
+      DB_USER: ${DB_USER:-directus}
+      DB_PASSWORD: ${DB_PASSWORD:-directus_password_change_me}
+
+      # Directus Core
+      KEY: ${DIRECTUS_KEY:-your-secret-key-change-me}
+      SECRET: ${DIRECTUS_SECRET:-your-secret-secret-change-me}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@jvo.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin_password_change_me}
+
+      # URL Configuration
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8055}
+      API_HEALTH_CHECK_THRESHOLD: 0
+
+      # Storage (optional, for file uploads)
+      STORAGE_LOCATIONS: local
+      STORAGE_LOCAL_DRIVER: local
+      STORAGE_LOCAL_ROOT: /directus/uploads
+
+      # Email (optional, can add later)
+      MAIL_FROM: ${MAIL_FROM:-noreply@jvo.local}
+      MAIL_TRANSPORT: sendmail
+
+      # Rate Limiting
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_STORE: memory
+      RATE_LIMITER_MAX_REQUESTS: 100
+      RATE_LIMITER_WINDOW_MS: 60000
+
+      # CORS Configuration
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+      CORS_ALLOW_CREDENTIALS: "true"
+
+      # Logging
+      LOG_LEVEL: info
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    volumes:
+      # Persist uploads
+      - directus_uploads:/directus/uploads
+      # Persist extensions (custom code)
+      - directus_extensions:/directus/extensions
+
+    networks:
+      - jvo-network
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8055/server/info"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+  directus_uploads:
+    driver: local
+  directus_extensions:
+    driver: local
+
+networks:
+  jvo-network:
+    driver: bridge

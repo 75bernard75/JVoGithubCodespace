@@ -1,0 +1,49 @@
+{
+  "name": "jeux-video-occasion",
+  "version": "1.0.0",
+  "description": "Site affiliation premium jeux vidéo & consoles rétro occasion",
+  "type": "module",
+  "scripts": {
+    "dev": "eleventy --serve --port 8080",
+    "build": "eleventy",
+    "test:seo": "node scripts/test-seo.js",
+    "test:perf": "npm run build && npm run lighthouse",
+    "test:content": "node scripts/test-content.js",
+    "test:security": "node scripts/test-security.js",
+    "test:affiliate": "node scripts/test-affiliate.js",
+    "test:all": "npm run test:seo && npm run test:content && npm run test:affiliate && npm run test:security",
+    "lighthouse": "node scripts/lighthouse-ci.js",
+    "data:export": "node scripts/export-json.js",
+    "data:validate": "node scripts/validate-schema.js",
+    "directus:setup": "node scripts/setup-directus-collections.js",
+    "directus:export": "node scripts/export-directus-json.js",
+    "directus:install": "bash scripts/install-directus-self-hosted.sh",
+    "directus:security": "node scripts/configure-security.js"
+  },
+  "keywords": [
+    "retro",
+    "gaming",
+    "consoles",
+    "occasion",
+    "affiliation"
+  ],
+  "author": "JVO",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^4.0.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "argon2": "^0.44.0",
+    "html-minifier": "^4.0.0",
+    "lighthouse": "^11.0.0",
+    "node-fetch": "^3.3.0",
+    "sharp": "^0.33.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^17.2.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

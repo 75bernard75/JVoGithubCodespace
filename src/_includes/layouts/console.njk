@@ -1,0 +1,75 @@
+---
+layout: layouts/base.njk
+---
+<article class="console-page">
+    <h1>{{ title }}</h1>
+    
+    {% if persona_primary %}
+    <div class="persona-badge">
+        <span class="badge">Pour : {{ persona_primary }}</span>
+        {% if technical_level %}<span class="difficulty">Niveau : {{ technical_level }}/5</span>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if images and images.length > 0 %}
+    <figure class="hero-image">
+        {% set img = images[0] %}
+        {% image img.source, img.alt %}
+        {% if img.alt %}<figcaption>{{ img.alt }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+
+    <div class="content">
+        {{ content | safe }}
+    </div>
+
+    {% if versions and versions.v3 %}
+    <section class="version-info">
+        <p><small>Contenu validé & optimisé (V3)</small></p>
+    </section>
+    {% endif %}
+
+    {% if internal_links and internal_links.length > 0 %}
+    <nav class="internal-links" aria-label="Liens connexes">
+        <h3>À consulter aussi</h3>
+        <ul>
+        {% for link in internal_links | head(5) %}
+            <li><a href="/{{ link }}/">{{ link }}</a></li>
+        {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    {% if affiliate_blocks and affiliate_blocks.length > 0 %}
+    <aside class="affiliate-section" role="region" aria-label="Bloc affiliation">
+        <h3>{{ affiliate_title or "Où acheter" }}</h3>
+        {% for block in affiliate_blocks %}
+        <div class="affiliate-block affiliate-{{ block.type }}">
+            <p>{{ block.cta_text }}</p>
+            <a href="{{ block.link }}" rel="sponsored" data-track-click="true" data-affiliate-type="{{ block.type }}">
+                Voir les offres
+            </a>
+        </div>
+        {% endfor %}
+    </aside>
+    {% endif %}
+
+    {% if videos and videos.length > 0 %}
+    <section class="media-section">
+        <h3>Ressources vidéo</h3>
+        {% for video in videos %}
+        <figure class="video-embed">
+            <iframe 
+                src="{{ video.url }}" 
+                title="{{ video.title or 'Video' }}" 
+                loading="lazy"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            {% if video.contextual_intro %}<figcaption>{{ video.contextual_intro }}</figcaption>{% endif %}
+        </figure>
+        {% endfor %}
+    </section>
+    {% endif %}
+</article>

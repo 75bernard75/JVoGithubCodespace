@@ -1,0 +1,305 @@
+#!/usr/bin/env bash
+# LOT 2 Backend Setup Summary
+# For: jeux-video-occasion.com (Affiliation + Rétro Gaming)
+# Status: 🟡 Ready for T2.1 (user action)
+
+cat << 'EOF'
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                          🚀 LOT 2: BACKEND SETUP                          ║
+║                                                                            ║
+║                 jeux-video-occasion.com (Rétro Gaming)                    ║
+║                                                                            ║
+║               Phase C — Directus Headless CMS Implementation              ║
+║                          2025-01-19                                       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📊 STATUS OVERVIEW
+═══════════════════════════════════════════════════════════════════════════
+
+  ✅ LOT 0 (Architecture)    COMPLETE  — Framework decided (Eleventy + Directus)
+  ✅ LOT 1 (Eleventy)        COMPLETE  — Website building (0.28s, 17 KB, tests ✓)
+  🟡 LOT 2 (Backend)         IN-PROGRESS — Directus setup (T2.1 blocking)
+  ⏳ LOT 3–7                 PENDING    — CI/CD, Content, Monetization, Launch
+
+═══════════════════════════════════════════════════════════════════════════
+
+🎯 LOT 2 MISSION (Next 4.5 Hours)
+═══════════════════════════════════════════════════════════════════════════
+
+Deploy Directus Cloud + configure 7 collections (consoles, guides, accessories,
+videos, images, affiliate_config, users) for content management.
+
+Result: WordPress-like admin panel for non-technical editors to manage
+all website content without coding.
+
+═══════════════════════════════════════════════════════════════════════════
+
+📋 SIX TASKS IN ORDER
+═══════════════════════════════════════════════════════════════════════════
+
+  T2.1: Setup Directus Cloud Instance     [🟡 USER ACTION — 30 min]
+        → Create project at https://cloud.directus.io
+        → Get API key, store in .env
+
+  T2.2: Implement Collections             [⏳ Ready — 10 min]
+        → npm run directus:setup
+        → Auto-creates 7 collections via API
+
+  T2.3: Prototype UX Test                 [⏳ Ready — 30 min]
+        → Login, test CRUD operations
+        → Verify WordPress-like interface
+
+  T2.4: Export JSON Route                 [⏳ Ready — 45 min]
+        → npm run directus:export
+        → Creates data/directus-export.json
+
+  T2.5: Security & Logging                [⏳ Ready — 30 min]
+        → Configure CORS, rate limits, headers
+        → Enable audit logs
+
+  T2.6: Admin Documentation               [✅ Ready — 2 hours]
+        → 3 guides already created
+        → Ready for editor onboarding
+
+═══════════════════════════════════════════════════════════════════════════
+
+⚡ IMMEDIATE ACTION REQUIRED (T2.1)
+═══════════════════════════════════════════════════════════════════════════
+
+  1. Go to: https://cloud.directus.io
+  2. Create project "jeux-video-occasion"
+     • Database: PostgreSQL
+     • Region: Europe
+  3. Get admin credentials from email
+  4. Create API key (Settings → API Keys)
+  5. Update .env file:
+     DIRECTUS_URL=https://[project].directus.app
+     DIRECTUS_API_KEY=[your-64-char-key]
+  6. Test connection:
+     curl -H "Authorization: Bearer $DIRECTUS_API_KEY" \
+       "$DIRECTUS_URL/api/server/info"
+
+  ✅ When returns JSON → You're ready for T2.2
+
+═══════════════════════════════════════════════════════════════════════════
+
+🎯 AFTER T2.1 COMPLETE
+═══════════════════════════════════════════════════════════════════════════
+
+  Run these commands (all automated):
+
+  npm run directus:setup          # T2.2 (10 min)
+  npm run directus:export         # T2.4 (included)
+  # Configure security            # T2.5 (in admin panel)
+  # Review documentation          # T2.6 (already done)
+
+═══════════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION STRUCTURE
+═══════════════════════════════════════════════════════════════════════════
+
+  Quick Start:
+  ├─ START_LOT2.md ........................ ← Read this first (5 min)
+  ├─ LOT2_README.md ....................... Overview + quick start
+  └─ HANDOFF_LOT2.md ...................... Complete specifications
+
+  Admin Guides (After T2.2):
+  ├─ docs/ADMIN_DIRECTUS_SETUP.md ........ Collections reference
+  ├─ docs/ADMIN_CONTENT_WORKFLOW.md ...... How-to tutorials
+  └─ docs/ADMIN_TROUBLESHOOTING.md ....... FAQ + problem-solving
+
+  Validation:
+  └─ LOT2_COMPLETION_CHECKLIST.md ........ Sign-off checklist
+
+  Project Overview:
+  ├─ README.md ............................ Project overview
+  ├─ PHASE_C_SUMMARY.md .................. Phase architecture
+  └─ 00_START_HERE.md .................... Entry point
+
+═══════════════════════════════════════════════════════════════════════════
+
+📊 COLLECTIONS TO CREATE (T2.2)
+═══════════════════════════════════════════════════════════════════════════
+
+  1. Consoles              (Gaming systems: PS2, N64, Xbox, etc.)
+  2. Guides                (How-to content with v1/v2/v3 versions)
+  3. Accessories           (Controllers, cables, protective cases)
+  4. Videos                (YouTube embeds with context)
+  5. Images                (Photos, artwork, screenshots)
+  6. Affiliate Config      (Amazon tag, eBay campaign IDs)
+  7. Users                 (Team member access control)
+
+═══════════════════════════════════════════════════════════════════════════
+
+🔐 SECURITY (T2.5)
+═══════════════════════════════════════════════════════════════════════════
+
+  ✅ API key in .env (not in git)
+  ✅ HTTPS enforced (no HTTP)
+  ✅ CORS whitelist (only our domain)
+  ✅ Rate limiting (100 req/min)
+  ✅ Audit logs (90 day retention)
+  ✅ Credentials rotation (quarterly)
+
+═══════════════════════════════════════════════════════════════════════════
+
+📊 ARCHITECTURE FLOW
+═══════════════════════════════════════════════════════════════════════════
+
+  [Editor creates console in Directus]
+        ↓
+  [Sets Status: published]
+        ↓
+  [Nightly cron exports JSON]
+        ↓
+  [Eleventy reads JSON data]
+        ↓
+  [Generates static HTML]
+        ↓
+  [Deploy to mutualisé (FTP)]
+        ↓
+  [Live website (pure HTML)]
+
+═══════════════════════════════════════════════════════════════════════════
+
+✅ SUCCESS CRITERIA
+═══════════════════════════════════════════════════════════════════════════
+
+  T2.1 Done:
+    ☐ Directus Cloud instance running
+    ☐ Admin login working
+    ☐ API key configured
+    ☐ Connection test returns JSON
+
+  T2.2 Done:
+    ☐ 7 collections visible in admin
+    ☐ 50+ fields configured
+    ☐ All script steps completed
+
+  T2.3 Done:
+    ☐ Create, read, update, delete working
+    ☐ Rich text editor functional
+    ☐ UI feels WordPress-like
+
+  T2.4 Done:
+    ☐ data/directus-export.json exists
+    ☐ Valid JSON format
+    ☐ npm run build succeeds
+
+  T2.5 Done:
+    ☐ Security headers active
+    ☐ CORS configured
+    ☐ Audit logs enabled
+
+  T2.6 Done:
+    ☐ 3 admin guides reviewed
+    ☐ Troubleshooting doc complete
+    ☐ Editor onboarding ready
+
+═══════════════════════════════════════════════════════════════════════════
+
+📞 HELP & RESOURCES
+═══════════════════════════════════════════════════════════════════════════
+
+  Stuck on T2.1?
+  → Directus Cloud Docs: https://docs.directus.io/getting-started/installation/
+  → API Keys: https://docs.directus.io/reference/authentication.html
+
+  Stuck on anything else?
+  → See: docs/ADMIN_TROUBLESHOOTING.md (10+ common issues + fixes)
+  → See: LOT2_README.md (quick reference)
+  → See: HANDOFF_LOT2.md (detailed specs)
+
+═══════════════════════════════════════════════════════════════════════════
+
+🚀 NEXT PHASE (LOT 3)
+═══════════════════════════════════════════════════════════════════════════
+
+  After LOT 2 complete:
+
+  LOT 3: CI/CD Automation (GitHub Actions)
+    ├─ Nightly Directus export sync
+    ├─ Eleventy rebuild on content change
+    ├─ Deploy to mutualisé (FTP/SFTP)
+    └─ Performance + security tests
+
+  LOT 4: Content Creation
+    ├─ Populate 25 consoles
+    ├─ Write guides (v1/v2/v3 versions)
+    ├─ Upload images & videos
+    └─ Assign personas to all content
+
+  LOT 5: Monetization
+    ├─ Configure Amazon Associates
+    ├─ Setup eBay EPN
+    └─ GA4 tracking for clicks
+
+═══════════════════════════════════════════════════════════════════════════
+
+📋 FILES CREATED FOR LOT 2
+═══════════════════════════════════════════════════════════════════════════
+
+  Scripts:
+    ✅ scripts/setup-directus-cloud.sh
+    ✅ scripts/setup-directus-collections.js
+    ✅ scripts/export-directus-json.js
+
+  Documentation:
+    ✅ START_LOT2.md
+    ✅ LOT2_README.md
+    ✅ LOT2_COMPLETION_CHECKLIST.md
+    ✅ HANDOFF_LOT2.md
+    ✅ docs/ADMIN_DIRECTUS_SETUP.md
+    ✅ docs/ADMIN_CONTENT_WORKFLOW.md
+    ✅ docs/ADMIN_TROUBLESHOOTING.md
+
+  Configuration:
+    ✅ package.json (updated with directus:* scripts)
+    ✅ .env.example
+
+═══════════════════════════════════════════════════════════════════════════
+
+🎓 KEY CONCEPTS
+═══════════════════════════════════════════════════════════════════════════
+
+  Directus:
+    Headless CMS → separate content (Directus) from website (Eleventy)
+
+  Collections:
+    Database tables → Consoles, Guides, Accessories, etc.
+
+  Fields:
+    Data columns → name, slug, tier, status, etc.
+
+  Personas:
+    Target audiences → nostalgic-gamer, collector, technical-enthusiast
+
+  Gating:
+    Rules for content → only published, personas match, etc.
+
+  Versions:
+    Complexity levels → V1 (beginner), V2 (intermediate), V3 (expert)
+
+═══════════════════════════════════════════════════════════════════════════
+
+✨ STARTING NOW
+═══════════════════════════════════════════════════════════════════════════
+
+  1. Read START_LOT2.md (5 minutes)
+  2. Go to https://cloud.directus.io
+  3. Create project "jeux-video-occasion"
+  4. Get API key
+  5. Update .env file
+  6. Run connection test
+  7. Message when ready → T2.2–T2.6 automated!
+
+═══════════════════════════════════════════════════════════════════════════
+
+Status:    🟡 Ready (T2.1 blocking)
+Est. Time: 4.5 hours (after T2.1)
+Next:      Directus Cloud instance creation
+
+═══════════════════════════════════════════════════════════════════════════
+
+EOF

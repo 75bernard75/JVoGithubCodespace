@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /EdithLa/
+Disallow: /.env
+Disallow: /config/
+Disallow: /.git/
+
+Allow: /
+
+Sitemap: https://jeux-video-occasion.com/sitemap.xml
