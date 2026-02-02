@@ -1,0 +1,6 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+    <rect width="400" height="300" fill="#f5f5f5"/>
+    <circle cx="120" cy="150" r="80" fill="#ff6b35" opacity="0.7"/>
+    <rect x="220" y="80" width="140" height="140" fill="#0066cc" opacity="0.7" rx="10"/>
+    <text x="200" y="270" font-size="20" fill="#1a1a1a" text-anchor="middle" font-family="Arial">Accessoire Gaming</text>
+  </svg>
