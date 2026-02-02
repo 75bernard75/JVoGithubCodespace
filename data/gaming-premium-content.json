@@ -1,0 +1,75 @@
+{
+  "consoles": [
+    {
+      "title": "PlayStation 5 : L'Excellence de Sony",
+      "manufacturer": "Sony",
+      "release_year": 2020,
+      "specs": "Processeur 8-core Zen 2 @ 3.5 GHz, GPU RDNA2 10.28 TFLOPS",
+      "price_range": "€499-699",
+      "games_count": 2500,
+      "status": "published"
+    },
+    {
+      "title": "Xbox Series X : La Puissance Indomptable",
+      "manufacturer": "Microsoft",
+      "release_year": 2020,
+      "specs": "Processeur custom 8-core @ 3.8 GHz, GPU RDNA2 12 TFLOPS",
+      "price_range": "€499-699",
+      "games_count": 3000,
+      "status": "published"
+    },
+    {
+      "title": "Nintendo Switch : La Révolution Portable",
+      "manufacturer": "Nintendo",
+      "release_year": 2017,
+      "specs": "SoC custom NVIDIA Tegra",
+      "price_range": "€299-359",
+      "games_count": 3500,
+      "status": "published"
+    }
+  ],
+  "guides": [
+    {
+      "title": "Connecter votre Console Rétro à une TV Moderne",
+      "difficulty": "intermediate",
+      "duration_minutes": 15,
+      "status": "published"
+    },
+    {
+      "title": "PS5 vs Xbox Series X : Le Duel Ultime",
+      "difficulty": "beginner",
+      "duration_minutes": 8,
+      "status": "published"
+    }
+  ],
+  "accessories": [
+    {
+      "title": "Manette DualSense PlayStation 5",
+      "category": "controllers",
+      "brand": "Sony",
+      "price_eur": 75,
+      "status": "published"
+    },
+    {
+      "title": "Câble HDMI 2.1 Ultra Premium",
+      "category": "cables",
+      "brand": "Corsair",
+      "price_eur": 29,
+      "status": "published"
+    },
+    {
+      "title": "Support Mural Gaming Premium",
+      "category": "stands_storage",
+      "brand": "Elgato",
+      "price_eur": 89,
+      "status": "published"
+    }
+  ],
+  "generated_at": "2026-02-02T08:35:10.246Z",
+  "stats": {
+    "total_items": 8,
+    "consoles": 3,
+    "guides": 2,
+    "accessories": 3
+  }
+}
