@@ -36,10 +36,12 @@ jobs:
       - name: Build with Eleventy
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Upload artifact with v4 (bypasses deprecated v3 dependency)
+        uses: actions/upload-artifact@v4
         with:
+          name: github-pages
           path: '_site'
+          retention-days: 1
 
       - name: Deploy to GitHub Pages
         id: deployment
