@@ -4,30 +4,22 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # DISABLED: Nightly redeploy removed to stop email spam
-  # Uncomment if you want daily redeployment
-  # schedule:
-  #   - cron: '0 6 * * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -36,19 +28,11 @@ jobs:
       - name: Build with Eleventy
         run: npm run build
 
-      - name: Upload artifact with v4 (bypasses deprecated v3 dependency)
-        uses: actions/upload-artifact@v4
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: github-pages
-          path: '_site'
-          retention-days: 1
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
-
-      - name: Post-deploy verification
-        run: |
-          echo "✅ Deployment successful!"
-          echo "🌐 Site URL: https://75bernard75.github.io/JVoGithubCodespace/"
-          echo "📝 Check deployment status in Actions tab"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          cname: false
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
