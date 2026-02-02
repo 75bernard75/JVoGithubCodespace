@@ -112,6 +112,13 @@ export default function (eleventyConfig) {
     return Math.min.apply(null, numbers);
   });
 
+  // Pass through files and directories
+  eleventyConfig.addPassthroughCopy("src/assets/css/");
+  eleventyConfig.addPassthroughCopy("src/assets/images/");
+  eleventyConfig.addPassthroughCopy("src/assets/js/");
+  eleventyConfig.addPassthroughCopy("src/robots.txt");
+  eleventyConfig.addPassthroughCopy("src/sitemap.njk");
+
   // Config object
   return {
     dir: {
