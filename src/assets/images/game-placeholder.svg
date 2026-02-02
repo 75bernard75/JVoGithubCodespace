@@ -1,0 +1,6 @@
+<svg width="300" height="400" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+    <rect width="300" height="400" fill="#333"/>
+    <rect x="30" y="30" width="240" height="280" fill="#0066cc" rx="10"/>
+    <text x="150" y="180" font-size="32" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">🎮 Jeu AAA</text>
+    <text x="150" y="360" font-size="18" fill="white" text-anchor="middle" font-family="Arial">Couverture Jeu</text>
+  </svg>

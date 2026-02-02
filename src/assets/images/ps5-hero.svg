@@ -1,0 +1,7 @@
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+    <rect width="600" height="300" fill="#001a33"/>
+    <circle cx="150" cy="150" r="80" fill="#0066cc" opacity="0.8"/>
+    <rect x="350" y="100" width="160" height="160" fill="#0066cc" opacity="0.8" rx="20"/>
+    <text x="300" y="180" font-size="48" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">PlayStation 5</text>
+    <text x="300" y="230" font-size="24" fill="#ff6b35" text-anchor="middle" font-family="Arial">L'Excellence Gaming</text>
+  </svg>

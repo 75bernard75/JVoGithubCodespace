@@ -1,0 +1,14 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#2d2d2d;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="630" fill="url(#grad)"/>
+    <circle cx="300" cy="315" r="150" fill="#0066cc" opacity="0.6"/>
+    <rect x="650" y="165" width="300" height="300" fill="#ff6b35" opacity="0.6" rx="20"/>
+    <text x="600" y="120" font-size="72" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">Gaming Premium</text>
+    <text x="600" y="220" font-size="48" fill="#ff6b35" text-anchor="middle" font-family="Arial">Guides • Accessoires • Jeux</text>
+    <text x="600" y="520" font-size="32" fill="white" text-anchor="middle" font-family="Arial">Votre Source Complète Gaming</text>
+  </svg>
