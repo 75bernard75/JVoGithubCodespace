@@ -1,0 +1,85 @@
+{
+  "games": [
+    {
+      "title": "Elden Ring",
+      "console": "PlayStation 5",
+      "genre": "RPG Action",
+      "release_year": 2022,
+      "publisher": "Bandai Namco",
+      "price_eur": 59.99,
+      "rating": 9.3
+    },
+    {
+      "title": "Final Fantasy XVI",
+      "console": "PlayStation 5",
+      "genre": "JRPG",
+      "release_year": 2023,
+      "publisher": "Square Enix",
+      "price_eur": 69.99,
+      "rating": 8.8
+    },
+    {
+      "title": "Baldur's Gate 3",
+      "console": "PlayStation 5",
+      "genre": "RPG",
+      "release_year": 2023,
+      "publisher": "Larian Studios",
+      "price_eur": 64.99,
+      "rating": 9.5
+    },
+    {
+      "title": "Spider-Man 2",
+      "console": "PlayStation 5",
+      "genre": "Action Aventure",
+      "release_year": 2023,
+      "publisher": "Insomniac Games",
+      "price_eur": 69.99,
+      "rating": 9.2
+    },
+    {
+      "title": "Starfield",
+      "console": "Xbox Series X",
+      "genre": "RPG Sci-Fi",
+      "release_year": 2023,
+      "publisher": "Bethesda",
+      "price_eur": 69.99,
+      "rating": 8.6
+    },
+    {
+      "title": "Forza Motorsport 5",
+      "console": "Xbox Series X",
+      "genre": "Racing",
+      "release_year": 2023,
+      "publisher": "Turn 10",
+      "price_eur": 69.99,
+      "rating": 9
+    },
+    {
+      "title": "Halo Infinite",
+      "console": "Xbox Series X",
+      "genre": "FPS",
+      "release_year": 2021,
+      "publisher": "343 Industries",
+      "price_eur": 59.99,
+      "rating": 8.8
+    },
+    {
+      "title": "The Legend of Zelda: Tears of the Kingdom",
+      "console": "Nintendo Switch",
+      "genre": "Aventure",
+      "release_year": 2023,
+      "publisher": "Nintendo",
+      "price_eur": 69.99,
+      "rating": 9.8
+    },
+    {
+      "title": "Super Mario Bros. Wonder",
+      "console": "Nintendo Switch",
+      "genre": "Plateforme",
+      "release_year": 2023,
+      "publisher": "Nintendo",
+      "price_eur": 59.99,
+      "rating": 8.9
+    }
+  ]
+}
