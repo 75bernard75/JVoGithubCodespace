@@ -84,6 +84,20 @@ export default function (eleventyConfig) {
     });
   });
 
+  // Backwards-compatible date filter used in some templates
+  eleventyConfig.addFilter("dateFilter", (dateObj, locale = "fr") => {
+    try {
+      const d = dateObj ? new Date(dateObj) : new Date();
+      return d.toLocaleDateString(locale === "fr" ? "fr-FR" : locale, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch (e) {
+      return dateObj;
+    }
+  });
+
   eleventyConfig.addFilter("head", (array, n) => {
     if (!Array.isArray(array) || array.length === 0) {
       return [];
