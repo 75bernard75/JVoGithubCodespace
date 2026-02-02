@@ -1,0 +1,21 @@
+{
+  "amazon_fr": {
+    "base_url": "https://amzn.to",
+    "ps5_console": "amzn.to/PS5Console",
+    "xbox_series_x": "amzn.to/XboxSeriesX",
+    "nintendo_switch": "amzn.to/NintendoSwitch",
+    "dualsense": "amzn.to/DualSense",
+    "elite_controller": "amzn.to/EliteController",
+    "elden_ring": "amzn.to/EldenRing",
+    "baldurs_gate_3": "amzn.to/BaldursGate3",
+    "zelda_tears_kingdom": "amzn.to/ZeldaTOTK",
+    "samsung_990_pro": "amzn.to/Samsung990Pro",
+    "steelseries_arctis": "amzn.to/SteelSeriesArctis"
+  },
+  "monetization": {
+    "strategy": "affiliate",
+    "primary": "amazon_fr",
+    "commission_rate": "variable",
+    "disclosure": "As an Amazon Associate, we earn from qualifying purchases"
+  }
+}

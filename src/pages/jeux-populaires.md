@@ -1,9 +1,11 @@
 ---
-title: "Jeux Populaires"
-description: "Découvrez les jeux les plus populaires et les mieux notés pour PS5, Xbox Series X et Nintendo Switch"
+title: "Jeux Populaires 2024-2025 | PS5, Xbox, Switch"
+description: "Découvrez les jeux AAA les plus populaires et les mieux notés pour PS5, Xbox Series X et Nintendo Switch. Comparatifs, prix et guides d'achat."
 layout: layouts/base.njk
+keywords: "jeux PS5, jeux Xbox Series X, jeux Nintendo Switch, Elden Ring, Final Fantasy XVI, Baldur's Gate 3"
+permalink: /jeux-populaires/
 eleventyNavigation:
-  key: "Jeux"
+  key: "Jeux Populaires"
   parent: "Principal"
   order: 3
 ---

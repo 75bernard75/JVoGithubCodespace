@@ -1,7 +1,9 @@
 ---
-title: "Guide d'Achat - Accessoires Gaming"
-description: "Trouvez les meilleurs accessoires pour PS5, Xbox Series X et Nintendo Switch"
+title: "Guide d'Achat Accessoires Gaming 2024 | Meilleurs Prix"
+description: "Sélection des meilleurs accessoires gaming : manettes, casques, stockage SSD. Comparatifs, avis et prix d'occasion pour PS5, Xbox, Switch."
 layout: layouts/base.njk
+keywords: "accessoires gaming, manette PS5, casque gaming, stockage SSD, prix accessoires"
+permalink: /guide-achat-accessoires/
 ---
 
 # 🎧 Guide d'Achat - Accessoires Gaming
