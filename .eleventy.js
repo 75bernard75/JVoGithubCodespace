@@ -127,7 +127,7 @@ export default function (eleventyConfig) {
       includes: "_includes",
       data: "_data",
     },
-    pathPrefix: "/",
+    pathPrefix: "/JVoGithubCodespace/",
     templateFormats: ["md", "njk", "html"],
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
