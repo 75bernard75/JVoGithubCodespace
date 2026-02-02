@@ -6,4 +6,5 @@ Disallow: /.git/
 
 Allow: /
 
-Sitemap: https://jeux-video-occasion.com/sitemap.xml
+Sitemap: https://75bernard75.github.io/JVoGithubCodespace/sitemap.xml
+Crawl-delay: 1
