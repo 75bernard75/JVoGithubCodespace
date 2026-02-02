@@ -1,9 +1,9 @@
 name: Nightly Directus Export
 
 on:
-  schedule:
-    # Daily at 2 AM UTC (10 PM EST / 9 PM CST / 8 PM MST / 7 PM PST previous day)
-    - cron: '0 2 * * *'
+  # DISABLED: Was causing email spam - run manually with workflow_dispatch if needed
+  # schedule:
+  #   - cron: '0 2 * * *'
   
   # Manual trigger for testing
   workflow_dispatch:

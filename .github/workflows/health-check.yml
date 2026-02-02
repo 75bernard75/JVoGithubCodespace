@@ -1,9 +1,8 @@
 name: Production Health Check
 
 on:
-  schedule:
-    # Every 15 minutes
-    - cron: '*/15 * * * *'
+  # DISABLED: Was causing email spam - run manually with workflow_dispatch if needed
+  workflow_dispatch: {}
   
   workflow_dispatch:
 

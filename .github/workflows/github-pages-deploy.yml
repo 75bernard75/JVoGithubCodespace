@@ -4,9 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  schedule:
-    # Redéployer tous les jours à 6h UTC pour s'assurer que les derniers changements sont en place
-    - cron: '0 6 * * *'
+  # DISABLED: Nightly redeploy removed to stop email spam
+  # Uncomment if you want daily redeployment
+  # schedule:
+  #   - cron: '0 6 * * *'
 
 permissions:
   contents: read
